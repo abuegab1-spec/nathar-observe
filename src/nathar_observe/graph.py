@@ -434,7 +434,7 @@ def cmd_validate(args) -> int:
     """
     G = load_graph()
     if not G:
-        print("No graph cached. Run `nathar_wikilinks.py build` first.")
+        print("No graph cached. Run `nathar-graph build` first.")
         return 1
 
     path = Path(args.path)
@@ -754,6 +754,7 @@ def cmd_skill(args) -> int:
 
 
 def main():
+    config.configure_cli_output()
     parser = argparse.ArgumentParser(
         description="Wikilink graph index for NATHAR vault",
         formatter_class=argparse.RawDescriptionHelpFormatter,

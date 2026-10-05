@@ -55,7 +55,7 @@ def _collect_docs(roots=None):
                         body = text[end + 4:].lstrip("\r\n")
                 if not isinstance(metadata, dict):
                     metadata = {}
-                found[p] = Doc(str(p.relative_to(workspace)), p.stem, metadata, body,
+                found[p] = Doc(p.relative_to(workspace).as_posix(), p.stem, metadata, body,
                                str(metadata.get("description", "")), p.stat().st_mtime,
                                len(body.split()))
             except (OSError, UnicodeError, yaml.YAMLError):

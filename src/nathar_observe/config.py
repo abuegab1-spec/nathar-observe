@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 
@@ -65,6 +66,14 @@ def _make(**overrides):
 
 
 settings = _make()
+
+
+def configure_cli_output():
+    """Use UTF-8 for CLI pipes as well as terminals, including on Windows."""
+    for stream in (sys.stdout, sys.stderr):
+        reconfigure = getattr(stream, "reconfigure", None)
+        if reconfigure:
+            reconfigure(encoding="utf-8")
 
 
 def configure(**kwargs) -> Settings:

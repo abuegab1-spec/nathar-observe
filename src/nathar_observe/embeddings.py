@@ -208,6 +208,7 @@ def cmd_clear(args) -> int:
 
 
 def main():
+    config.configure_cli_output()
     p = argparse.ArgumentParser(description="Semantic skill discovery (Qdrant + fastembed)")
     config.add_arguments(p)
     sub = p.add_subparsers(dest="cmd", required=True)

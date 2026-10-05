@@ -13,7 +13,7 @@ import subprocess
 proc = subprocess.run([
     "nathar-observe", "--workspace", "/path/to/project",
     "--skills-only", "--json", "Review Python parser tests",
-], capture_output=True, text=True)
+], capture_output=True, text=True, encoding="utf-8")
 if proc.returncode not in (0, 2):
     raise RuntimeError("Routing blocked or failed; inspect the result")
 result = json.loads(proc.stdout)
@@ -28,6 +28,10 @@ Fatal errors return a small `{version, status: "fatal", error}` envelope; blocke
 results expose missing requirements in `missing_baseline`.
 
 Core fields:
+
+CLI output uses UTF-8 on every platform. Relative knowledge paths use `/`
+separators; absolute skill paths retain the platform's native path format.
+The skill reader preserves source line endings and hashes the original bytes.
 
 | Field | Meaning |
 | --- | --- |

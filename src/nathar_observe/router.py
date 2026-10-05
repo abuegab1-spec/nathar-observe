@@ -1496,6 +1496,7 @@ def render_brief(query: str, skills_limit: int = DEFAULT_SKILLS_LIMIT,
 
 
 def main(argv=None) -> int:
+    config.configure_cli_output()
     parser = argparse.ArgumentParser(description=__doc__)
     config.add_arguments(parser)
     parser.add_argument("--version", action="version", version=VERSION)

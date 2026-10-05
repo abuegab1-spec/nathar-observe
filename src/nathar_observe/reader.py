@@ -32,6 +32,7 @@ def chunk(path, offset=0, chars=3000, expected_hash=None):
         end = offset + (end - offset) // 2
 
 def main():
+    config.configure_cli_output()
     parser = argparse.ArgumentParser(description=__doc__)
     config.add_arguments(parser)
     parser.add_argument("path")

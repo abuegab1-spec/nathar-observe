@@ -201,7 +201,7 @@ def cmd_search(args) -> int:
 def cmd_stats(args) -> int:
     client = _client()
     if not client.collection_exists(COLLECTION):
-        print(f"No collection: {COLLECTION}. Run: python3 nathar_qdrant.py ingest")
+        print(f"No collection: {COLLECTION}. Run: nathar-vault ingest")
         return 1
     info = client.get_collection(COLLECTION)
     print(f"Collection: {COLLECTION}")
@@ -231,6 +231,7 @@ def cmd_reindex(args) -> int:
 
 
 def main() -> int:
+    config.configure_cli_output()
     p = argparse.ArgumentParser(description="NATHAR vector search via Qdrant + fastembed")
     config.add_arguments(p)
     sub = p.add_subparsers(dest="cmd", required=True)

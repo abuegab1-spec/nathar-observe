@@ -1,4 +1,5 @@
 import json
+import os
 import shutil
 import subprocess
 import sys
@@ -205,7 +206,7 @@ def test_symlink_escape_is_not_collected(workspace, tmp_path):
 
 def test_reader_preserves_hash_and_reads_complete_guide(workspace):
     path = workspace / "skills/python-testing/SKILL.md"
-    text = path.read_text()
+    text = path.read_bytes().decode("utf-8-sig")
     output, offset, digest = [], 0, None
     while True:
         result = reader.chunk(path, offset, chars=35, expected_hash=digest)
@@ -217,6 +218,25 @@ def test_reader_preserves_hash_and_reads_complete_guide(workspace):
     path.write_text(text + "changed")
     with pytest.raises(ValueError, match="changed"):
         reader.chunk(path, 0, expected_hash=digest)
+
+
+@pytest.mark.parametrize("module,args", [
+    ("nathar_observe", ["--skills-only", "--json", "راجع اختبارات المحلل"]),
+    ("nathar_observe.graph", ["build"]),
+    ("nathar_observe.reader", ["skills/python-testing/SKILL.md"]),
+])
+def test_cli_output_is_utf8_even_with_legacy_pipe_encoding(workspace, module, args):
+    env = dict(os.environ, PYTHONIOENCODING="cp1252")
+    result = subprocess.run([sys.executable, "-m", module, "--workspace", str(workspace), *args],
+                            env=env, capture_output=True)
+    assert result.returncode == 0, result.stderr.decode("utf-8")
+    text = result.stdout.decode("utf-8")
+    if module == "nathar_observe":
+        assert json.loads(text)["query"] == args[-1]
+    elif module.endswith("graph"):
+        assert "✓ Built wikilink graph" in text
+    else:
+        assert json.loads(text)["eof"]
 
 
 def test_receipts_are_explicit_and_omit_task_text(workspace):
