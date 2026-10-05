@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="300" viewBox="0 0 1280 300" role="img" aria-labelledby="title desc">
+<title id="title">خطوات عمل Nathar Observe</title><desc id="desc">يدخل الطلب ومصادره إلى المنظومة لاختيار السياق والمهارات، ثم يقرأ الوكيل النتيجة والمصادر وينفذ المهمة.</desc>
+<defs><marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10" fill="none" stroke="#3d4038" stroke-width="1.5"/></marker></defs>
+<rect width="1280" height="300" rx="20" fill="#f7f6f0"/>
+<g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+<rect x="900" y="30" width="340" height="240" rx="18" fill="#fffefa" stroke="#ddded6"/>
+<text x="1070" y="72" font-size="16" letter-spacing="2" fill="#555950">01 / INPUT</text>
+<rect x="1050" y="91" width="40" height="4" rx="2" fill="#c7e52b"/>
+<text x="1070" y="143" font-size="30" font-weight="700" fill="#232521" direction="rtl">طلبك ومصادرك</text>
+<text x="1070" y="190" font-size="18" fill="#555950" direction="rtl">معرفة محلية ومهارات مثبتة</text>
+<text x="1070" y="222" font-size="18" fill="#555950" direction="rtl">تصدير المحادثات اختياري</text>
+<rect x="470" y="30" width="340" height="240" rx="18" fill="#232521" stroke="#232521"/>
+<text x="640" y="72" font-size="16" letter-spacing="2" fill="#dedfd8">02 / OBSERVE</text>
+<rect x="620" y="91" width="40" height="4" rx="2" fill="#c7e52b"/>
+<text x="640" y="143" font-size="30" font-weight="700" fill="#f7f6f0" direction="rtl">استرجاع وتوجيه</text>
+<text x="640" y="190" font-size="18" fill="#dedfd8" direction="rtl">سياق مناسب ومهارات مختارة</text>
+<text x="640" y="222" font-size="18" fill="#dedfd8" direction="rtl">مسارات المصادر وأسباب الاختيار</text>
+<rect x="40" y="30" width="340" height="240" rx="18" fill="#fffefa" stroke="#ddded6"/>
+<text x="210" y="72" font-size="16" letter-spacing="2" fill="#555950">03 / HANDOFF</text>
+<rect x="190" y="91" width="40" height="4" rx="2" fill="#c7e52b"/>
+<text x="210" y="143" font-size="30" font-weight="700" fill="#232521" direction="rtl">الوكيل ينفّذ</text>
+<text x="210" y="190" font-size="18" fill="#555950" direction="rtl">يقرأ نتيجة JSON والمصادر</text>
+<text x="210" y="222" font-size="18" fill="#555950" direction="rtl">ثم ينفّذ طلب المستخدم</text>
+<path d="M 890 150 L 825 150" fill="none" stroke="#3d4038" stroke-width="2" marker-end="url(#arrow)"/>
+<path d="M 460 150 L 395 150" fill="none" stroke="#3d4038" stroke-width="2" marker-end="url(#arrow)"/>
+</g></svg>
