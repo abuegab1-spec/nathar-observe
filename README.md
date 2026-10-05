@@ -1,10 +1,28 @@
-# Nathar Observe
+<p align="center">
+  <img src="docs/assets/nathar-observe-hero.png" alt="Nathar Observe: a task and local knowledge, conversations, and skills flow through Observe into a JSON handoff for an AI agent." width="100%">
+</p>
 
-**Context retrieval and explainable skill routing for AI agents.**
+<h1 align="center">Nathar Observe</h1>
 
-[العربية](docs/README.ar.md) · [Agent skill](skills/nathar-observe/SKILL.md) · [Integration contract](docs/integration.md)
+<p align="center"><strong>Context retrieval and explainable skill routing for AI agents.</strong></p>
 
-Licensed under [MIT](LICENSE).
+<p align="center">
+  <a href="https://github.com/abuegab1-spec/nathar-observe/actions/workflows/tests.yml"><img src="https://github.com/abuegab1-spec/nathar-observe/actions/workflows/tests.yml/badge.svg" alt="Tests"></a>
+  <img src="https://img.shields.io/badge/Python-3.10%2B-38bdf8?style=flat-square" alt="Python 3.10 or newer">
+  <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-a3e635?style=flat-square" alt="MIT license"></a>
+  <img src="https://img.shields.io/badge/Agent-independent-c4b5fd?style=flat-square" alt="Agent independent">
+</p>
+
+<p align="center">
+  <a href="#quick-start">Quick start</a> ·
+  <a href="docs/README.ar.md">العربية</a> ·
+  <a href="skills/nathar-observe/SKILL.md">Agent skill</a> ·
+  <a href="docs/integration.md">Integration guide</a>
+</p>
+
+---
+
+## Give your agent the context it needs
 
 Nathar Observe takes a task, finds relevant local knowledge and conversation excerpts,
 and selects installed `SKILL.md` guides. It returns source paths, selection reasons,
@@ -13,17 +31,28 @@ excluded candidates, and a handoff for the agent that will execute the task.
 It runs as a CLI or Python library. It requires no agent framework, account, gateway,
 API key, or container. Any agent that can run a command or consume JSON can use it.
 
-```text
-Task + configured sources
-          │
-          ├── Knowledge retrieval → relevance checks → source paths
-          ├── Conversation JSONL → scoped excerpts
-          ├── Skill metadata → matching + scope filters → selected guides
-          └── Optional wikilink graph → related notes
-          │
-          ▼
-JSON / text handoff → agent reads sources and guides → executes the original task
+| Find the context | Choose the guides | Explain the handoff |
+| --- | --- | --- |
+| Relevant local notes, optional conversation exports, and wikilink leads. | Installed skills matched to the task, with explicit scope filters. | Source paths, selection reasons, excluded candidates, and visible retrieval issues. |
+
+## How it works
+
+```mermaid
+flowchart LR
+    T["Your task"] --> O["Nathar Observe"]
+    K["Local knowledge"] --> O
+    C["Conversation export · optional"] --> O
+    S["Installed skills"] --> O
+    G["Wikilink graph · optional"] --> O
+    O --> H["JSON handoff"]
+    H --> A["Agent reads sources and guides"]
+    A --> E["Agent executes your task"]
+    style O fill:#142334,stroke:#38bdf8,color:#f8fafc
+    style H fill:#1c2b16,stroke:#a3e635,color:#f8fafc
 ```
+
+Observe prepares context and skill selection. Your agent reads the recommended
+files and carries out the task.
 
 ## Quick start
 
@@ -44,6 +73,38 @@ nathar-observe --workspace examples/workspace \
 The default **lexical** backend works offline after installation. It does not
 download a model, use Qdrant, or create an index. The example workspace contains
 synthetic skills and notes; it includes no personal memory or real conversations.
+
+### What you get
+
+For the example task, Observe selects `python-testing` and `api-review` and
+returns the matching knowledge files. This is an excerpt of the JSON result;
+the full output includes scores, selection details, and reading instructions:
+
+```json
+{
+  "status": "ok",
+  "discovery_mode": "lexical",
+  "selected_skills": ["python-testing", "api-review"],
+  "qdrant_hits": [
+    {"path": "knowledge/parser.md"},
+    {"path": "knowledge/api.md"}
+  ]
+}
+```
+
+`qdrant_hits` is the existing context-result field name for both lexical and
+semantic search. Default lexical lookup does not require Qdrant.
+
+### Choose a search mode
+
+| | Lexical · default | Semantic · optional |
+| --- | --- | --- |
+| Matching | Words in skill metadata and notes | Embeddings plus lexical skill matching |
+| Setup | Base installation | Semantic extra, model download, and explicit indexing |
+| Storage | No search index | Local Qdrant storage or your Qdrant server |
+| Languages | Unicode; depends on matching words | Default model is English; translated lookup available |
+
+### Development
 
 For an editable development install and tests:
 
@@ -205,6 +266,12 @@ skill directory, then configure the CLI for the workspace you want it to search.
 The guide uses standard Markdown/YAML and does not depend on a particular agent.
 The installed wheel also includes the guide under `share/nathar-observe/skills`.
 
+| Guide | Use it for |
+| --- | --- |
+| [Agent skill](skills/nathar-observe/SKILL.md) | Teaching an agent when to run Observe and how to read its results |
+| [Integration contract](docs/integration.md) | JSON fields, exit codes, catalogue inputs, and application integration |
+| [الشرح العربي](docs/README.ar.md) | التثبيت، التشغيل، وربط المعرفة والمهارات بالعربي |
+
 The result includes `status`, `selected_skills`, `skill_read_contract`,
 `qdrant_hits` (context candidates; the historical field name also applies to
 lexical mode), `conversation_hits`, `wikilinks_nodes`, and `layer_errors`.
@@ -230,3 +297,7 @@ providers replaced by explicit configuration and a JSONL conversation interface.
 Standalone package versions start at 0.1.0. Only Observe's relevant components
 belong to this release; unrelated host administration and personal scripts are
 outside the package.
+
+---
+
+<p align="center">Local sources · Explicit configuration · Explainable routing<br>Released under the <a href="LICENSE">MIT license</a>.</p>

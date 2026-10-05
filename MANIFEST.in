@@ -1,5 +1,6 @@
 include LICENSE README.md
 recursive-include docs *.md
+recursive-include docs/assets *.png
 recursive-include skills *.md
 recursive-include examples *.md *.jsonl
 recursive-include tests *.py
